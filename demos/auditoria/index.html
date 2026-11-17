@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=1280">
 <title>Painel de auditoria de atendimento — Demo</title>
 <style>
 :root{ --bg:#0A1020; --card:#101A30; --card2:#0D1528; --line:#1D2A47; --ink:#E6ECF7; --muted:#8C9BB8; --ok:#34D399; --warn:#FBBF24; --bad:#F87171; --brand:#60A5FA; }
@@ -123,5 +123,6 @@ function fechar(){document.getElementById('drawer').classList.remove('open');doc
 document.getElementById('shade').onclick=fechar;document.addEventListener('keydown',e=>{if(e.key==='Escape')fechar();});
 resumo();render();
 </script>
+<script src="../mobile.js"></script>
 </body>
 </html>
