@@ -49,8 +49,7 @@ function cardProjeto(p) {
     '<ul>' + p.pontos.map((x) => '<li>' + esc(x) + '</li>').join('') + '</ul>' +
     '<div class="stack"><b>Tecnologias:</b> ' + esc(p.stack.join(' · ')) + '</div>' +
     '<div class="btns"><a class="btn" href="' + esc(p.demo) + '">' + esc(p.demoRotulo) + ' →</a>' +
-    (p.codigo ? '<a class="btn ghost" target="_blank" rel="noopener" href="' + esc(p.codigo) + '">Ver código</a>' : '') +
-    '<button type="button" class="mais" aria-expanded="false">Ver detalhes</button></div></div>' +
+    (p.codigo ? '<a class="btn ghost" target="_blank" rel="noopener" href="' + esc(p.codigo) + '">Ver código</a>' : '') + '</div></div>' +
     '</article>';
 }
 function tocar(card, p, idx) {
@@ -72,7 +71,6 @@ function montarLista(id, lista) {
     const p = lista.find((x) => x.id === card.dataset.id);
     tocar(card, p, 0);
     card.addEventListener('click', (e) => {
-      const m = e.target.closest('.mais'); if (m) { const aberto = card.classList.toggle('aberto'); m.setAttribute('aria-expanded', aberto); m.textContent = aberto ? 'Ocultar detalhes' : 'Ver detalhes'; return; }
       const t = e.target.closest('.th'); if (t) { abrirLb(p.id, Number(t.dataset.i)); return; }
       const b = e.target.closest('.vtabs button'); if (b) { card.querySelectorAll('.vtabs button').forEach((x) => x.classList.toggle('on', x === b)); tocar(card, p, Number(b.dataset.v)); }
     });
@@ -156,3 +154,39 @@ function revelar() {   // abas de projetos, painéis e automações: os blocos d
     el.style.transitionDelay = ((i % 4) * 0.07) + 's'; io.observe(el);
   });
 }
+
+/* ---------- Demos no celular: abrem em tela cheia e, quando o aparelho permite, deitadas ---------- */
+const ehCelular = () => matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) < 600;
+let demoOv = null;
+function ajustarDemo() {   // a demo é desenhada para 1280 px de largura (layout de computador) e é reduzida para caber na tela
+  if (!demoOv) return;
+  const f = demoOv.querySelector('iframe'), W = innerWidth, H = innerHeight, retrato = H > W;
+  const lado = retrato ? H : W, curto = retrato ? W : H, k = lado / 1280;
+  f.style.width = '1280px'; f.style.height = Math.ceil(curto / k) + 'px';
+  // celular em pé: a demo é girada 90° e já aparece deitada, ocupando a tela toda; ao girar o aparelho, volta ao normal
+  f.style.transform = retrato ? 'translateX(' + W + 'px) rotate(90deg) scale(' + k + ')' : 'scale(' + k + ')';
+}
+function abrirDemo(url) {
+  demoOv = document.createElement('div'); demoOv.className = 'demo-ov';
+  demoOv.innerHTML = '<iframe src="' + esc(url) + '" title="Demonstração" allow="fullscreen"></iframe>';
+  document.body.appendChild(demoOv); document.body.style.overflow = 'hidden'; ajustarDemo();
+  history.pushState({ demo: 1 }, '', location.href);
+  // se o aparelho permitir (Android/Chrome), entra em tela cheia e trava na horizontal, sem perguntar nada
+  const pedido = demoOv.requestFullscreen ? demoOv.requestFullscreen() : Promise.reject();
+  Promise.resolve(pedido).then(() => (screen.orientation && screen.orientation.lock ? screen.orientation.lock('landscape') : null)).catch(() => {});
+}
+function fecharDemo() {
+  if (!demoOv) return;
+  demoOv.remove(); demoOv = null; document.body.style.overflow = '';
+  try { screen.orientation.unlock(); } catch (e) {}
+  if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+  if (history.state && history.state.demo) history.back();
+}
+addEventListener('resize', ajustarDemo); addEventListener('orientationchange', () => setTimeout(ajustarDemo, 150));
+addEventListener('message', (e) => { if (e.data && e.data.fecharDemo) fecharDemo(); });
+addEventListener('popstate', () => { if (demoOv) fecharDemo(); });
+document.addEventListener('click', (e) => {
+  const a = e.target.closest('.proj .btns a.btn[href^="demos/"]');
+  if (!a || !ehCelular() || e.metaKey || e.ctrlKey) return;
+  e.preventDefault(); abrirDemo(a.getAttribute('href'));
+});

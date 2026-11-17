@@ -243,7 +243,6 @@ html.intro .foot{ animation:cair .3s ease-out .95s both; }
 body.aba-sobre .top-in{ max-width:calc(1320px + 2 * clamp(20px,2vw,40px)); }
 
 /* ===== CELULAR (até 640px): visual simples, cartões compactos, detalhes sob demanda ===== */
-.mais{ display:none; }
 @media (max-width:640px){
   /* topo: logo em cima, abas em 4 colunas iguais (sem rolagem lateral) */
   .top-in, body.aba-sobre .top-in{ max-width:none; padding:10px 14px 8px; height:auto; flex-direction:column; align-items:stretch; gap:8px; }
@@ -262,7 +261,10 @@ body.aba-sobre .top-in{ max-width:calc(1320px + 2 * clamp(20px,2vw,40px)); }
   .body{ font-size:15px; line-height:1.65; margin-bottom:16px; text-align:justify; text-align-last:left; text-justify:inter-word; }
   .hero .cta{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
   .hero .cta .btn{ justify-content:center; padding:10px 8px; font-size:14px; border-radius:10px; }
-  .hero .cta .btn:last-child:nth-child(odd){ grid-column:1 / -1; }
+  /* ordem no celular: Projetos, Painéis | E-mail, LinkedIn | Currículo na linha inteira */
+  .hero .cta a[href="#projetos"]{ order:1; } .hero .cta a[href="#paineis"]{ order:2; }
+  .hero .cta a[href^="mailto:"]{ order:3; } .hero .cta a[href*="linkedin"]{ order:4; } .hero .cta a[href*="github"]{ order:5; }
+  .hero .cta a[href$=".pdf"]{ order:6; grid-column:1 / -1; }
   .areas{ margin-top:0; border-radius:20px; padding:4px 6px; }
   .area{ gap:12px; padding:13px 10px; } .area i{ width:44px; height:44px; border-radius:14px; } .area i svg{ width:24px; height:24px; }
   .area h3{ font-size:16.5px; } .area p{ font-size:13px; }
@@ -280,12 +282,9 @@ body.aba-sobre .top-in{ max-width:calc(1320px + 2 * clamp(20px,2vw,40px)); }
   .thumbs{ display:flex; overflow-x:auto; gap:8px; margin-top:8px; scrollbar-width:none; } .thumbs::-webkit-scrollbar{ display:none; }
   .th{ flex:0 0 78px; aspect-ratio:4/3; border-radius:10px; } .th:after{ display:none; }
   .proj-txt{ display:flex; flex-direction:column; gap:10px; }
-  .proj-txt .btns{ order:-1; display:grid; grid-template-columns:1fr auto; gap:8px; margin:0; }
+  .proj-txt .btns{ order:-1; display:flex; flex-direction:column; gap:8px; margin:0; }
   .proj-txt .btns .btn{ justify-content:center; padding:11px 12px; font-size:14px; }
-  .mais{ display:inline-flex; align-items:center; justify-content:center; padding:11px 14px; border-radius:12px; border:1px solid var(--line); background:var(--card2); color:var(--ink); font:inherit; font-weight:700; font-size:14px; cursor:pointer; }
-  .proj-txt p.d{ margin:0; font-size:14.5px; line-height:1.55; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
-  .proj.aberto .proj-txt p.d{ display:block; -webkit-line-clamp:unset; }
-  .proj:not(.aberto) .proj-txt ul, .proj:not(.aberto) .proj-txt .stack{ display:none; }
+  .proj-txt p.d{ margin:0; font-size:14.5px; line-height:1.55; }
   .proj ul{ grid-template-columns:1fr; gap:8px; margin:0; } .proj li{ font-size:14px; }
   .stack{ margin:0; }
 
@@ -296,3 +295,7 @@ body.aba-sobre .top-in{ max-width:calc(1320px + 2 * clamp(20px,2vw,40px)); }
   .nota-fim{ margin:16px 0 0; }
   .lb{ padding:16px 8px; }
 }
+
+/* demo em tela cheia no celular */
+.demo-ov{ position:fixed; inset:0; z-index:300; background:#000; overflow:hidden; }
+.demo-ov iframe{ border:0; display:block; transform-origin:0 0; background:#fff; }
