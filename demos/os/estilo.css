@@ -478,11 +478,11 @@
 #os-detail .os-perf .os-card{ display:flex; flex-direction:column; min-height:0; padding:8px 12px; }
 #os-detail .os-perf .os-table-wrap.os-inner{ margin:0; flex:1 1 0; min-height:0; box-shadow:none; }
 #os-detail .os-parambox{ display:flex; justify-content:center; margin-bottom:6px; }
-#os-detail .os-hbars{ flex:1 1 0; min-height:0; overflow-y:auto; padding-right:4px; }
-#os-detail .os-hb2{ display:grid; grid-template-columns:minmax(0,38%) minmax(0,1fr) 64px; align-items:center; gap:8px; padding:3px 4px; border-radius:6px; cursor:pointer; font-size:13px; }
+#os-detail .os-hbars{ flex:1 1 0; min-height:0; overflow-y:auto; padding-right:4px; display:flex; flex-direction:column; gap:3px; }
+#os-detail .os-hb2{ display:grid; grid-template-columns:minmax(0,38%) minmax(0,1fr) 64px; align-items:center; gap:8px; padding:3px 4px; border-radius:6px; cursor:pointer; font-size:13px; flex:1 1 0; min-height:24px; max-height:64px; }
 #os-detail .os-hb2:hover{ background:var(--gray-light); }
 #os-detail .os-hb2-n{ font-weight:800; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; text-align:right; }
-#os-detail .os-hb2-t{ height:16px; background:#EEF2F6; border-radius:4px; overflow:hidden; display:block; }
+#os-detail .os-hb2-t{ height:58%; min-height:14px; max-height:34px; background:#EEF2F6; border-radius:5px; overflow:hidden; display:block; }
 #os-detail .os-hb2-t i{ display:block; height:100%; border-radius:4px; }
 #os-detail .os-hb2 b{ font-weight:800; font-size:13px; }
 #os-detail .os-hb2.is-dim{ opacity:.4; }
