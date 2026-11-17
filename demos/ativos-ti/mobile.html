@@ -188,8 +188,8 @@ function render(){const [,r,p]=(location.hash||'#/inicio').split('/');const rota
 document.addEventListener('click',e=>{
   const rg=e.target.closest('[data-reg]');if(rg){registrar(rg.dataset.reg,rg.dataset.tag);return;}
   const nt=e.target.closest('[data-net]');if(nt){toggleNet();return;}
-  const g=e.target.closest('[data-go]');if(g){location.hash=g.dataset.go;return;}
-  const tb=e.target.closest('.tab');if(tb){location.hash='#/'+tb.dataset.r;return;}
+  const g=e.target.closest('[data-go]');if(g){location.replace(g.dataset.go.charAt(0)==='#'?g.dataset.go:'#'+g.dataset.go);return;}
+  const tb=e.target.closest('.tab');if(tb){location.replace('#/'+tb.dataset.r);return;}
   const c=e.target.closest('#chips .chip');if(c){filtro.tipo=c.dataset.t;render();return;}
   const m=e.target.closest('#seg span');if(m){filtro.mov=m.dataset.m;render();return;}
   const r=e.target.closest('#chipsR .chip');if(r){filtro.rep=r.dataset.r;render();}});

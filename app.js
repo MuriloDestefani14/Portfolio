@@ -19,7 +19,12 @@ function montarSobre() {
   $('#mono').textContent = ini; $('#logoNome').textContent = PERFIL.nome;
   $('#hCargo').textContent = PERFIL.cargo;
   $('#hTitulo').textContent = PERFIL.titulo || PERFIL.nome;
-  $('#hHeadline').textContent = PERFIL.headline; $('#hResumo').textContent = PERFIL.resumo;
+  // cada item é uma peça que não quebra no meio; no computador as linhas seguem a quebra de linha do conteudo.js, no celular quebram sozinhas em até 2 linhas equilibradas
+  const gruposHl = PERFIL.headline.split('\n');
+  $('#hHeadline').innerHTML = gruposHl.map((g, gi) => {
+    const itens = g.split('|').map((t) => t.trim()).filter(Boolean);
+    return itens.map((t, i) => '<span class="hl-i">' + esc(t) + (i < itens.length - 1 ? ' |' : (gi < gruposHl.length - 1 ? '<span class="hl-pipe"> |</span>' : '')) + '</span>').join(' ');
+  }).join(' <br class="hl-br">'); $('#hResumo').textContent = PERFIL.resumo;
   const L = PERFIL.links;
   $('#hLinks').innerHTML =
     '<a class="btn" href="#projetos">Projetos</a><a class="btn ghost" href="#paineis">Painéis BI</a>' +
@@ -168,18 +173,14 @@ function ajustarDemo() {   // a demo é desenhada para 1280 px de largura (layou
 }
 function abrirDemo(url) {
   demoOv = document.createElement('div'); demoOv.className = 'demo-ov';
-  demoOv.innerHTML = '<iframe src="' + esc(url) + '" title="Demonstração" allow="fullscreen"></iframe>';
+  demoOv.innerHTML = '<iframe src="' + esc(url) + '" title="Demonstração"></iframe>';
   document.body.appendChild(demoOv); document.body.style.overflow = 'hidden'; ajustarDemo();
   history.pushState({ demo: 1 }, '', location.href);
-  // se o aparelho permitir (Android/Chrome), entra em tela cheia e trava na horizontal, sem perguntar nada
-  const pedido = demoOv.requestFullscreen ? demoOv.requestFullscreen() : Promise.reject();
-  Promise.resolve(pedido).then(() => (screen.orientation && screen.orientation.lock ? screen.orientation.lock('landscape') : null)).catch(() => {});
+  // sem a API de tela cheia do navegador, que mostraria o aviso "para sair da tela cheia, arraste..." (não dá para esconder esse aviso)
 }
 function fecharDemo() {
   if (!demoOv) return;
   demoOv.remove(); demoOv = null; document.body.style.overflow = '';
-  try { screen.orientation.unlock(); } catch (e) {}
-  if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
   if (history.state && history.state.demo) history.back();
 }
 addEventListener('resize', ajustarDemo); addEventListener('orientationchange', () => setTimeout(ajustarDemo, 150));

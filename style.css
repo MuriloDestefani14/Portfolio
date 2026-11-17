@@ -299,3 +299,10 @@ body.aba-sobre .top-in{ max-width:calc(1320px + 2 * clamp(20px,2vw,40px)); }
 /* demo em tela cheia no celular */
 .demo-ov{ position:fixed; inset:0; z-index:300; background:#000; overflow:hidden; }
 .demo-ov iframe{ border:0; display:block; transform-origin:0 0; background:#fff; }
+
+/* frase de conhecimentos abaixo do nome */
+.hl-i{ white-space:nowrap; } .hl-pipe{ display:none; }
+@media (max-width:640px){
+  .lead{ text-wrap:balance; font-size:min(15px, calc((100vw - 28px) / 26)); }   /* a letra acompanha a largura da tela, para a frase caber em 2 linhas */
+  .hl-pipe{ display:inline; } .hl-br{ display:none; }
+}

@@ -96,7 +96,7 @@ const IC={painel:'<path d="M4 13h6V4H4zM14 20h6V11h-6zM4 20h6v-3H4zM14 8h6V4h-6z
  insp:'<path d="M9 11l3 3 7-8M5 5h9M5 9h2M5 13h4M5 17h8"/>',in:'<path d="M12 4v12M7 11l5 5 5-5M5 20h14"/>',out:'<path d="M12 20V8M7 13l5-5 5 5M5 4h14"/>',swap:'<path d="M7 7h12l-3-3M17 17H5l3 3"/>'};
 const NAV={painel:'Painel',ativos:'Ativos',mov:'Movimentações',custos:'Custos'};
 const SUB={painel:'Visão geral do parque e atividade do aplicativo móvel',ativos:'Inventário completo, com ciclo de vida de cada item',mov:'Entregas, devoluções e transferências',custos:'Gastos com reparos, peças e garantias'};
-document.querySelectorAll('.nav').forEach(n=>{n.innerHTML=svg(IC[n.dataset.r])+NAV[n.dataset.r];n.title=NAV[n.dataset.r];n.onclick=()=>{location.hash='#/'+n.dataset.r};});
+document.querySelectorAll('.nav').forEach(n=>{n.innerHTML=svg(IC[n.dataset.r])+NAV[n.dataset.r];n.title=NAV[n.dataset.r];n.onclick=()=>{location.replace('#/'+n.dataset.r)};});
 /* ---- gráficos ---- */
 function donut(items){const tot=items.reduce((s,x)=>s+x.v,0);let ang=-Math.PI/2;const R=66,r=41,cx=75,cy=75;let p='';
   items.forEach(x=>{const a2=ang+x.v/tot*Math.PI*2,g=a2-ang>Math.PI?1:0,P=(rr,a)=>(cx+rr*Math.cos(a)).toFixed(1)+' '+(cy+rr*Math.sin(a)).toFixed(1);p+=`<path d="M${P(R,ang)} A${R} ${R} 0 ${g} 1 ${P(R,a2)} L${P(r,a2)} A${r} ${r} 0 ${g} 0 ${P(r,ang)}Z" fill="${x.c}"/>`;ang=a2;});
@@ -153,7 +153,7 @@ function render(keep){const r=(location.hash||'#/painel').split('/')[1];const ro
   if(rota==='custos'&&cache.custos&&keep===true){}
   v.innerHTML=V[rota]();v.scrollTop=y;paintConn();
   const ct=document.getElementById('chipsTipo');if(ct)ct.onclick=e=>{const t=e.target.closest('.chip');if(t){filtro.tipo=t.dataset.t;render();}};}
-document.getElementById('busca').oninput=e=>{filtro.q=e.target.value.toLowerCase();if(!location.hash.startsWith('#/ativos'))location.hash='#/ativos';else render();};
+document.getElementById('busca').oninput=e=>{filtro.q=e.target.value.toLowerCase();if(!location.hash.startsWith('#/ativos'))location.replace('#/ativos');else render();};
 window.addEventListener('hashchange',()=>render());render();
 </script>
 </body>
