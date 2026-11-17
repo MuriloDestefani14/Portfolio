@@ -48,7 +48,7 @@ function cardProjeto(p) {
     '<div class="proj-txt"><p class="d">' + esc(p.descricao) + '</p>' +
     '<ul>' + p.pontos.map((x) => '<li>' + esc(x) + '</li>').join('') + '</ul>' +
     '<div class="stack"><b>Tecnologias:</b> ' + esc(p.stack.join(' · ')) + '</div>' +
-    '<div class="btns"><a class="btn" href="' + esc(p.demo) + '">' + esc(p.demoRotulo) + ' →</a>' +
+    '<div class="btns"><a class="btn" href="' + esc(p.demo) + '?v=' + (window.VERSAO || Date.now()) + '">' + esc(p.demoRotulo) + ' →</a>' +
     (p.codigo ? '<a class="btn ghost" target="_blank" rel="noopener" href="' + esc(p.codigo) + '">Ver código</a>' : '') + '</div></div>' +
     '</article>';
 }

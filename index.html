@@ -6,7 +6,14 @@
 <title>Portfólio · Dados, painéis e automações</title>
 <meta name="description" content="Portfólio de painéis de BI, aplicativos e automações. Todos os dados e nomes são fictícios.">
 <script>(function(){var h=location.hash;if((!h||h==="#sobre")&&!matchMedia("(prefers-reduced-motion: reduce)").matches){var r=document.documentElement;r.classList.add("intro");setTimeout(function(){r.classList.remove("intro")},9000);}})();</script>
-<link rel="stylesheet" href="style.css">
+<script>
+/* Sempre a versão mais nova: cada visita pede os arquivos com um carimbo de hora, então o navegador não usa cópia antiga.
+   (O GitHub Pages guarda cada arquivo em cache por uns 10 minutos; o carimbo faz esse prazo não valer para o site.) */
+var VERSAO = Date.now();
+document.write('<link rel="stylesheet" href="style.css?v=' + VERSAO + '">');
+try { if (window.caches) caches.keys().then(function (ks) { ks.forEach(function (k) { caches.delete(k); }); });
+      if (navigator.serviceWorker) navigator.serviceWorker.getRegistrations().then(function (rs) { rs.forEach(function (r) { r.unregister(); }); }); } catch (e) {}
+</script>
 </head>
 <body>
 <header class="top">
@@ -74,7 +81,6 @@
   <button class="lb-n lb-nx" id="lbN" aria-label="Próxima">›</button>
 </div>
 
-<script src="conteudo.js"></script>
-<script src="app.js"></script>
+<script>document.write('<script src="conteudo.js?v=' + VERSAO + '"><\/script><script src="app.js?v=' + VERSAO + '"><\/script>');</script>
 </body>
 </html>
