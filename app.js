@@ -49,7 +49,8 @@ function cardProjeto(p) {
     '<ul>' + p.pontos.map((x) => '<li>' + esc(x) + '</li>').join('') + '</ul>' +
     '<div class="stack"><b>Tecnologias:</b> ' + esc(p.stack.join(' · ')) + '</div>' +
     '<div class="btns"><a class="btn" href="' + esc(p.demo) + '">' + esc(p.demoRotulo) + ' →</a>' +
-    (p.codigo ? '<a class="btn ghost" target="_blank" rel="noopener" href="' + esc(p.codigo) + '">Ver código</a>' : '') + '</div></div>' +
+    (p.codigo ? '<a class="btn ghost" target="_blank" rel="noopener" href="' + esc(p.codigo) + '">Ver código</a>' : '') +
+    '<button type="button" class="mais" aria-expanded="false">Ver detalhes</button></div></div>' +
     '</article>';
 }
 function tocar(card, p, idx) {
@@ -71,6 +72,7 @@ function montarLista(id, lista) {
     const p = lista.find((x) => x.id === card.dataset.id);
     tocar(card, p, 0);
     card.addEventListener('click', (e) => {
+      const m = e.target.closest('.mais'); if (m) { const aberto = card.classList.toggle('aberto'); m.setAttribute('aria-expanded', aberto); m.textContent = aberto ? 'Ocultar detalhes' : 'Ver detalhes'; return; }
       const t = e.target.closest('.th'); if (t) { abrirLb(p.id, Number(t.dataset.i)); return; }
       const b = e.target.closest('.vtabs button'); if (b) { card.querySelectorAll('.vtabs button').forEach((x) => x.classList.toggle('on', x === b)); tocar(card, p, Number(b.dataset.v)); }
     });

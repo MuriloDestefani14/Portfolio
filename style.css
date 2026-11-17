@@ -241,3 +241,58 @@ html.intro .foot{ animation:cair .3s ease-out .95s both; }
 
 /* primeira tela: topo (logo e menu) alinhado com a largura do conteúdo */
 body.aba-sobre .top-in{ max-width:calc(1320px + 2 * clamp(20px,2vw,40px)); }
+
+/* ===== CELULAR (até 640px): visual simples, cartões compactos, detalhes sob demanda ===== */
+.mais{ display:none; }
+@media (max-width:640px){
+  /* topo: logo em cima, abas em 4 colunas iguais (sem rolagem lateral) */
+  .top-in, body.aba-sobre .top-in{ max-width:none; padding:10px 14px 8px; height:auto; flex-direction:column; align-items:stretch; gap:8px; }
+  .brand{ justify-content:flex-start; }
+  .logo{ font-size:15px; gap:10px; } .mono{ width:32px; height:32px; font-size:14px; }
+  .tabs{ display:grid; grid-template-columns:repeat(4,1fr); gap:4px; overflow:visible; }
+  .tabs a{ padding:8px 2px; font-size:13px; text-align:center; }
+  main{ padding:0 14px 28px; }
+  .foot{ padding:18px 14px 26px; font-size:12.5px; }
+
+  /* primeira tela */
+  .hero{ grid-template-columns:1fr; gap:22px; padding:22px 0 6px; }
+  .kicker{ font-size:11.5px; margin-bottom:8px; }
+  .hero h1{ font-size:38px; }
+  .lead{ font-size:15px; margin:12px 0 10px; }
+  .body{ font-size:15px; line-height:1.65; margin-bottom:16px; text-align:justify; text-align-last:left; text-justify:inter-word; }
+  .hero .cta{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .hero .cta .btn{ justify-content:center; padding:10px 8px; font-size:14px; border-radius:10px; }
+  .hero .cta .btn:last-child:nth-child(odd){ grid-column:1 / -1; }
+  .areas{ margin-top:0; border-radius:20px; padding:4px 6px; }
+  .area{ gap:12px; padding:13px 10px; } .area i{ width:44px; height:44px; border-radius:14px; } .area i svg{ width:24px; height:24px; }
+  .area h3{ font-size:16.5px; } .area p{ font-size:13px; }
+  .block{ margin-top:30px; } .block h2{ font-size:22px; margin-bottom:12px; }
+  .skills{ gap:12px; } .sk{ padding:16px 16px 18px; }
+  .timeline{ gap:22px; } .job{ padding-left:18px; } .job h3{ font-size:17px; } .job ul{ font-size:14.5px; }
+
+  /* projetos e painéis: título, vídeo, miniaturas em fila, botões e um resumo curto */
+  .lista-cards{ gap:16px; padding-top:14px; }
+  .proj{ padding:14px; border-radius:20px; gap:12px; scroll-margin-top:110px; }
+  .proj h2{ font-size:20px; line-height:1.2; }
+  .vtabs{ flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none; margin-bottom:8px; } .vtabs::-webkit-scrollbar{ display:none; }
+  .vtabs button{ flex:none; padding:6px 12px; font-size:12.5px; }
+  .vwrap{ border-radius:12px; } .vwrap.tall{ max-height:380px; } .vwrap.tall video{ max-height:380px; }
+  .thumbs{ display:flex; overflow-x:auto; gap:8px; margin-top:8px; scrollbar-width:none; } .thumbs::-webkit-scrollbar{ display:none; }
+  .th{ flex:0 0 78px; aspect-ratio:4/3; border-radius:10px; } .th:after{ display:none; }
+  .proj-txt{ display:flex; flex-direction:column; gap:10px; }
+  .proj-txt .btns{ order:-1; display:grid; grid-template-columns:1fr auto; gap:8px; margin:0; }
+  .proj-txt .btns .btn{ justify-content:center; padding:11px 12px; font-size:14px; }
+  .mais{ display:inline-flex; align-items:center; justify-content:center; padding:11px 14px; border-radius:12px; border:1px solid var(--line); background:var(--card2); color:var(--ink); font:inherit; font-weight:700; font-size:14px; cursor:pointer; }
+  .proj-txt p.d{ margin:0; font-size:14.5px; line-height:1.55; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+  .proj.aberto .proj-txt p.d{ display:block; -webkit-line-clamp:unset; }
+  .proj:not(.aberto) .proj-txt ul, .proj:not(.aberto) .proj-txt .stack{ display:none; }
+  .proj ul{ grid-template-columns:1fr; gap:8px; margin:0; } .proj li{ font-size:14px; }
+  .stack{ margin:0; }
+
+  /* automações */
+  .auto-grid{ gap:14px; padding-top:14px; }
+  .acard{ padding:18px; border-radius:18px; gap:12px; } .acard h2{ font-size:19px; } .acard p{ font-size:14.5px; }
+  .step i{ width:32px; height:32px; font-size:13px; } .step:not(:last-child):before{ left:15px; top:32px; }
+  .nota-fim{ margin:16px 0 0; }
+  .lb{ padding:16px 8px; }
+}
