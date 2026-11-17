@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portfólio · Dados, painéis e automações</title>
+<meta name="description" content="Portfólio de painéis de BI, aplicativos e automações. Todos os dados e nomes são fictícios.">
+<script>(function(){var h=location.hash;if((!h||h==="#sobre")&&!matchMedia("(prefers-reduced-motion: reduce)").matches){var r=document.documentElement;r.classList.add("intro");setTimeout(function(){r.classList.remove("intro")},9000);}})();</script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <div class="brand"><button type="button" class="voltar" id="voltar" aria-label="Voltar para a tela anterior" title="Voltar" hidden><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 5l-7 7 7 7"/></svg></button><a class="logo" href="#sobre" id="logo"><span class="mono" id="mono"></span><span id="logoNome"></span></a></div>
+    <nav class="tabs" id="tabs" role="tablist">
+      <a href="#sobre" data-tab="sobre" role="tab">Sobre</a>
+      <a href="#projetos" data-tab="projetos" role="tab">Projetos</a>
+      <a href="#paineis" data-tab="paineis" role="tab">Painéis BI</a>
+      <a href="#automacoes" data-tab="automacoes" role="tab">Automações</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- SOBRE -->
+  <section class="view" id="v-sobre">
+    <div class="hero">
+      <div class="hero-txt">
+        <span class="kicker" id="hCargo"></span>
+        <h1 id="hTitulo"></h1>
+        <p class="lead" id="hHeadline"></p>
+        <p class="body" id="hResumo"></p>
+        <div class="cta" id="hLinks"></div>
+      </div>
+      <div class="areas" id="areas"></div>
+    </div>
+
+    <div class="block">
+      <h2>Habilidades</h2>
+      <div id="skills" class="skills"></div>
+    </div>
+
+    <div class="block">
+      <h2>Experiência</h2>
+      <div id="exp" class="timeline"></div>
+    </div>
+  </section>
+
+  <section class="view" id="v-projetos" hidden>
+    <div id="lista-projetos" class="lista-cards"></div>
+    <p class="nota-fim">Dados e nomes fictícios para demonstração</p>
+  </section>
+
+  <section class="view" id="v-paineis" hidden>
+    <div id="lista-paineis" class="lista-cards"></div>
+    <p class="nota-fim">Dados e nomes fictícios para demonstração</p>
+  </section>
+
+  <section class="view" id="v-automacoes" hidden>
+    <div id="lista-auto" class="auto-grid"></div>
+    <p class="nota-fim">Dados e nomes fictícios para demonstração</p>
+  </section>
+</main>
+
+<footer class="foot">
+  <span>Todos os dados, nomes e valores exibidos são fictícios e servem apenas para demonstração.</span>
+  <span id="fLocal"></span>
+</footer>
+
+<div class="lb" id="lb" hidden>
+  <button class="lb-x" id="lbX" aria-label="Fechar">✕</button>
+  <button class="lb-n lb-p" id="lbP" aria-label="Anterior">‹</button>
+  <figure><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure>
+  <button class="lb-n lb-nx" id="lbN" aria-label="Próxima">›</button>
+</div>
+
+<script src="conteudo.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
