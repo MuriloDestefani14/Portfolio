@@ -4,6 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Portfólio · Dados, painéis e automações</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0A1214">
+<link rel="apple-touch-icon" href="assets/icones/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="assets/icones/icone-192.png">
 <meta name="description" content="Portfólio de painéis de BI, aplicativos e automações. Todos os dados e nomes são fictícios.">
 <script>(function(){var h=location.hash;if((!h||h==="#sobre")&&!matchMedia("(prefers-reduced-motion: reduce)").matches){var r=document.documentElement;r.classList.add("intro");setTimeout(function(){r.classList.remove("intro")},9000);}})();</script>
 <script>
@@ -12,7 +16,7 @@
 var VERSAO = Date.now();
 document.write('<link rel="stylesheet" href="style.css?v=' + VERSAO + '">');
 try { if (window.caches) caches.keys().then(function (ks) { ks.forEach(function (k) { caches.delete(k); }); });
-      if (navigator.serviceWorker) navigator.serviceWorker.getRegistrations().then(function (rs) { rs.forEach(function (r) { r.unregister(); }); }); } catch (e) {}
+      if (navigator.serviceWorker) navigator.serviceWorker.register('sw.js').catch(function () {}); } catch (e) {}
 </script>
 </head>
 <body>

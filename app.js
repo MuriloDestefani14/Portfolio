@@ -162,7 +162,8 @@ function revelar() {   // abas de projetos, painéis e automações: os blocos d
 
 /* ---------- Demos no celular: abrem em tela cheia e, quando o aparelho permite, deitadas ---------- */
 const ehCelular = () => matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) < 600;
-let demoOv = null;
+const TELA_CHEIA_DEMOS = true;   // false = demos sem tela cheia (e sem o aviso do Android)
+let demoOv = null, demoEmTelaCheia = false;
 function ajustarDemo() {   // a demo é desenhada para 1280 px de largura (layout de computador) e é reduzida para caber na tela
   if (!demoOv) return;
   const f = demoOv.querySelector('iframe'), W = innerWidth, H = innerHeight, retrato = H > W;
@@ -176,13 +177,23 @@ function abrirDemo(url) {
   demoOv.innerHTML = '<iframe src="' + esc(url) + '" title="Demonstração"></iframe>';
   document.body.appendChild(demoOv); document.body.style.overflow = 'hidden'; ajustarDemo();
   history.pushState({ demo: 1 }, '', location.href);
-  // sem a API de tela cheia do navegador, que mostraria o aviso "para sair da tela cheia, arraste..." (não dá para esconder esse aviso)
+  // tela cheia e trava na horizontal, no mesmo toque (Android/Chrome). O aviso "para sair da tela cheia..." é do próprio navegador e não dá para esconder.
+  const instalado = matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+  if (instalado) {   // aplicativo instalado: já não há barra do navegador nem aviso; só trava na horizontal
+    try { screen.orientation.lock('landscape').catch(() => {}); } catch (e) {}
+  } else if (TELA_CHEIA_DEMOS && demoOv.requestFullscreen) {
+    demoOv.requestFullscreen().then(() => { demoEmTelaCheia = true; return screen.orientation && screen.orientation.lock ? screen.orientation.lock('landscape') : null; }).catch(() => {});
+  }
 }
 function fecharDemo() {
   if (!demoOv) return;
-  demoOv.remove(); demoOv = null; document.body.style.overflow = '';
+  demoOv.remove(); demoOv = null; document.body.style.overflow = ''; demoEmTelaCheia = false;
+  try { screen.orientation.unlock(); } catch (e) {}
+  if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
   if (history.state && history.state.demo) history.back();
 }
+// o voltar do celular (ou o gesto de sair da tela cheia) fecha a demo de uma vez, em vez de só sair da tela cheia
+document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement && demoOv && demoEmTelaCheia) fecharDemo(); });
 addEventListener('resize', ajustarDemo); addEventListener('orientationchange', () => setTimeout(ajustarDemo, 150));
 addEventListener('message', (e) => { if (e.data && e.data.fecharDemo) fecharDemo(); });
 addEventListener('popstate', () => { if (demoOv) fecharDemo(); });
