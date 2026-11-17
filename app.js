@@ -162,7 +162,9 @@ function revelar() {   // abas de projetos, painéis e automações: os blocos d
 
 /* ---------- Demos no celular: abrem em tela cheia e, quando o aparelho permite, deitadas ---------- */
 const ehCelular = () => matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) < 600;
-const TELA_CHEIA_DEMOS = true;   // false = demos sem tela cheia (e sem o aviso do Android)
+// A tela cheia pedida pelo navegador faz o Android mostrar o aviso "para sair da tela cheia, arraste..." e esse aviso não pode ser escondido.
+// Por isso fica desligada (false). No aplicativo instalado (manifest com display "fullscreen") a tela já é cheia, sem aviso nenhum.
+const TELA_CHEIA_DEMOS = false;
 let demoOv = null, demoEmTelaCheia = false;
 function ajustarDemo() {   // a demo é desenhada para 1280 px de largura (layout de computador) e é reduzida para caber na tela
   if (!demoOv) return;
@@ -178,7 +180,7 @@ function abrirDemo(url) {
   document.body.appendChild(demoOv); document.body.style.overflow = 'hidden'; ajustarDemo();
   history.pushState({ demo: 1 }, '', location.href);
   // tela cheia e trava na horizontal, no mesmo toque (Android/Chrome). O aviso "para sair da tela cheia..." é do próprio navegador e não dá para esconder.
-  const instalado = matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+  const instalado = matchMedia('(display-mode: fullscreen)').matches || matchMedia('(display-mode: standalone)').matches || navigator.standalone;
   if (instalado) {   // aplicativo instalado: já não há barra do navegador nem aviso; só trava na horizontal
     try { screen.orientation.lock('landscape').catch(() => {}); } catch (e) {}
   } else if (TELA_CHEIA_DEMOS && demoOv.requestFullscreen) {
